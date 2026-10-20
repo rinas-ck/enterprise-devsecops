@@ -1,0 +1,18 @@
+# Python caches and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+.aws/
+*.pem
+*.key
+.vault-token
+
+# Security scan reports
+trivy-report.json
+trivy-high-critical.json

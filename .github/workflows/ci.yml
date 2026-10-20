@@ -1,0 +1,53 @@
+name: DevSecOps CI Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test-build-scan:
+    name: Test, Build and Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Build Docker image
+        run: docker build -t devsecops-api:${{ github.sha }} .
+
+      - name: Scan image with Trivy
+        run: |
+          docker run --rm \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -v "${HOME}/.cache/trivy:/root/.cache/" \
+            aquasecurity/trivy:0.69.3 image \
+            --scanners vuln \
+            --severity HIGH,CRITICAL \
+            --exit-code 0 \
+            --format table \
+            devsecops-api:${{ github.sha }}
+
+      - name: Enforce critical vulnerability gate
+        run: |
+          docker run --rm \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -v "${HOME}/.cache/trivy:/root/.cache/" \
+            aquasecurity/trivy:0.69.3 image \
+            --scanners vuln \
+            --severity CRITICAL \
+            --exit-code 1 \
+            devsecops-api:${{ github.sha }}
