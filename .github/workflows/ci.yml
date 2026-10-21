@@ -1,4 +1,3 @@
-
 name: DevSecOps CI Pipeline
 
 on:
@@ -12,12 +11,14 @@ permissions:
 
 jobs:
   test-build-scan:
-    name: Test, Build and Security Scan
+    name: Test, Build, Scan and Analyze
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -38,6 +39,19 @@ jobs:
 
       - name: Scan Kubernetes manifests with Checkov
         run: checkov -d k8s/ --framework kubernetes
+
+      - name: SonarQube Cloud analysis
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
+
+      - name: Enforce SonarQube quality gate
+        uses: SonarSource/sonarqube-quality-gate-action@v1
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
 
       - name: Build API Docker image
         run: docker build -t devsecops-api:${{ github.sha }} .
