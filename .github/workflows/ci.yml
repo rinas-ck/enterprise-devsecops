@@ -34,7 +34,7 @@ jobs:
           docker run --rm \
             -v /var/run/docker.sock:/var/run/docker.sock \
             -v "${HOME}/.cache/trivy:/root/.cache/" \
-            aquasecurity/trivy:0.69.3 image \
+            ghcr.io/aquasecurity/trivy:0.69.3 image \
             --scanners vuln \
             --severity HIGH,CRITICAL \
             --exit-code 0 \
@@ -46,7 +46,7 @@ jobs:
           docker run --rm \
             -v /var/run/docker.sock:/var/run/docker.sock \
             -v "${HOME}/.cache/trivy:/root/.cache/" \
-            aquasecurity/trivy:0.69.3 image \
+            ghcr.io/aquasecurity/trivy:0.69.3 image \
             --scanners vuln \
             --severity CRITICAL \
             --exit-code 1 \
