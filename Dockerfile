@@ -9,6 +9,8 @@ RUN apt-get update \
     && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
 
+RUN python3 -m pip install --no-cache-dir --upgrade pip
+
 COPY services/ ./services/
 
 RUN useradd --system --uid 10001 appuser
