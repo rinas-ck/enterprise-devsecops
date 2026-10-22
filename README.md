@@ -83,6 +83,13 @@ Inspect the canary rollout:
 
     kubectl argo rollouts get rollout devsecops-api-canary -n devsecops
 
+## Documentation
+
+- [Architecture and CI/CD workflow](docs/architecture.md)
+- [API documentation and sample responses](docs/api.md)
+- [Argo Rollouts evidence](docs/evidence/argo-rollout-resources.txt)
+- [Rollout failure and rollback evidence](docs/evidence/argo-rollout-rollback.txt)
+
 ## Repository Structure
 
     .github/workflows/ci.yml
