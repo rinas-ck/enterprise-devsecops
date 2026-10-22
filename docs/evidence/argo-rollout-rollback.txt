@@ -1,0 +1,24 @@
+Name:            devsecops-api-canary
+Namespace:       devsecops
+Status:          [31m✖[0m Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: ReplicaSet "devsecops-api-canary-686d4f55c8" has timed out progressing.
+Strategy:        Canary
+  Step:          0/3
+  SetWeight:     0
+  ActualWeight:  0
+Images:          devsecops-api:1.0.3 ([32mstable[0m)
+Replicas:
+  Desired:       2
+  Current:       2
+  Updated:       0
+  Ready:         2
+  Available:     2
+
+NAME                                              KIND        STATUS        AGE    INFO
+⟳ devsecops-api-canary                            Rollout     [31m✖[0m Degraded    4m59s  
+├──# revision:2                                                                    
+│  └──⧉ [33mdevsecops-api-canary-686d4f55c8[0m           ReplicaSet  [0m•[0m ScaledDown  3m51s  [33mcanary[0m
+└──# revision:1                                                                    
+   └──⧉ [32mdevsecops-api-canary-6669b59dc6[0m           ReplicaSet  [32m✔[0m Healthy     4m59s  [32mstable[0m
+      ├──□ devsecops-api-canary-6669b59dc6-5n2vp  Pod         [32m✔[0m Running     4m58s  ready:1/1
+      └──□ devsecops-api-canary-6669b59dc6-jx2pg  Pod         [32m✔[0m Running     4m58s  ready:1/1

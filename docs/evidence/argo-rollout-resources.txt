@@ -1,0 +1,12 @@
+NAME                                       DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+rollout.argoproj.io/devsecops-api-canary   2         2                      2           5m
+
+NAME                                              DESIRED   CURRENT   READY   AGE
+replicaset.apps/devsecops-api-6bdf86b688          1         1         1       23h
+replicaset.apps/devsecops-api-canary-6669b59dc6   2         2         2       5m
+replicaset.apps/devsecops-api-canary-686d4f55c8   0         0         0       3m52s
+
+NAME                                        READY   STATUS    RESTARTS      AGE
+pod/devsecops-api-6bdf86b688-l7p7p          1/1     Running   1 (27m ago)   23h
+pod/devsecops-api-canary-6669b59dc6-5n2vp   1/1     Running   0             4m59s
+pod/devsecops-api-canary-6669b59dc6-jx2pg   1/1     Running   0             4m59s
